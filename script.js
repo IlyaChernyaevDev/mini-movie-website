@@ -20,14 +20,15 @@ const personalMovieDB = {
             console.log(personalMovieDB);
         }
     },
-    writeYourGenres() {
+    writeYourGenres(genresArray) {
         for(let i = 0, n = 1; i <= 2; i++, n++) {
-            personalMovieDB.genres[i] = prompt(`Ваш любимый жанр под номером ${n}`);
-            if(personalMovieDB.genres[i] == '' || personalMovieDB.genres[i] == null) {
+            genresArray[i] = prompt(`Ваш любимый жанр под номером ${n}`);
+            if(genresArray[i] == '' || genresArray[i] == null) {
                 i--;
                 n--;
             }
         }
+
     },
     rememberMyFilms() {
         for(let i = 0; i < 2; ) {
@@ -51,15 +52,19 @@ const personalMovieDB = {
         } else {
             console.log('Произошла ошибка');
         }
+    },
+    toggleVisibleMyDB(privat) {
+        privat === true ? this.privat = false : this.privat = true;
     }
 };
 
-
-personalMovieDB.start();
+console.log(personalMovieDB.privat);
+// personalMovieDB.start();
 personalMovieDB.showMyDB(personalMovieDB.privat);
-personalMovieDB.ememberMyFilms();
-personalMovieDB.detectPersonalLevel(personalMovieDB.count);
-personalMovieDB.writeYourGenres();
-console.log(personalMovieDB.genres);
+personalMovieDB.toggleVisibleMyDB(personalMovieDB.privat);
+// personalMovieDB.ememberMyFilms();
+// personalMovieDB.detectPersonalLevel(personalMovieDB.count);
+// personalMovieDB.writeYourGenres(personalMovieDB.genres);
+console.log(personalMovieDB.privat);
 
 
