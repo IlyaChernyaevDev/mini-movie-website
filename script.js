@@ -1,18 +1,16 @@
 'use strict';
 
-let numberOfFilms;
-
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
     genres: [],
     privat: false,
     start() {
-        numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+        this.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
 
-        while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
-            numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+        while (this.count == '' || this.count == null || isNaN(this.count)) {
+            this.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
         }
     },
     showMyDB(privat) {
