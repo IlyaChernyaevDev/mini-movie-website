@@ -11,17 +11,21 @@ const movieDB = {
 };
 
 const promoBG = document.querySelector('.promo__bg');
-const commercialBlock = document.querySelector('.promo__adv');
-const banners = commercialBlock.querySelectorAll('img');
+const banners = document.querySelectorAll('.promo__adv img');
 const genre = promoBG.querySelector('.promo__genre');
-const filmsArray = document.querySelectorAll('.promo__interactive-item');
+const movieList = document.querySelector('.promo__interactive-list');
 
-promoBG.style.background = `url('img/bg.jpg') center center/cover no-repeat`;
+movieList.innerHTML = '';
+
+promoBG.style.background = `url('img/bg.jpg')`;
 genre.textContent = 'ДРАМА';
 
 movieDB.movies.sort();
-filmsArray.forEach((item, index) => {
-    item.textContent = `${++index}. ${movieDB.movies[--index]}`;
+movieDB.movies.forEach((movie, index) => {
+    movieList.insertAdjacentHTML('beforeend', `<li class="promo__interactive-item">
+                                                    ${++index}. ${movie}
+                                                    <div class="delete"></div>
+                                                </li>`);
 });
 
 function removeElements([...elements]) {
