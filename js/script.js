@@ -14,6 +14,9 @@ const promoBG = document.querySelector('.promo__bg');
 const banners = document.querySelectorAll('.promo__adv img');
 const genre = promoBG.querySelector('.promo__genre');
 const movieList = document.querySelector('.promo__interactive-list');
+const addMovieForm = document.querySelector('.add');
+const movieNameInput = document.querySelector('.adding__input');
+const favoriteMovieCheckbox = document.querySelector(`input[type='checkbox']`);
 
 movieList.innerHTML = '';
 
@@ -31,6 +34,24 @@ movieDB.movies.forEach((movie, index) => {
 function removeElements([...elements]) {
     elements.forEach(element => element.remove());
 }
-
+addMovieForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    isFavoriteMovie(favoriteMovieCheckbox);
+    movieDB.movies.push(checkLength(movieNameInput.value));
+    movieNameInput.value = '';
+    favoriteMovieCheckbox.checked = false;
+});
 removeElements(banners);
 
+function checkLength(str) {
+    return str.length > 21 ? `${str.slice(0, 21)}...` : str;
+}
+
+movieList.addEventListener('click', e => {
+    e.target.closest('li').remove();
+});
+
+
+function isFavoriteMovie(checkbox) {
+    checkbox.checked === true ? console.log('Сделать любимым') : '' ;
+}
