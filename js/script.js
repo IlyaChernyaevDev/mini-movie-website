@@ -10,16 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         movieNameInput = addMovieForm.querySelector('.adding__input'),
         favoriteMovieCheckbox = addMovieForm.querySelector(`input[type='checkbox']`);
 
-    // const movieDB = {
-    //     movies: [
-    //         "Логан",
-    //         "Лига справедливости",
-    //         "Ла-ла лэнд",
-    //         "Одержимость",
-    //         "Скотт Пилигрим против..."
-    //     ]
-    // };
-
     const movieDB = {
         movies: [
             {name: "логан", favorite: false},
@@ -77,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteMovieFromList(event) {
-        if(event.target.classList.contains('delete')) {
+        if(event.target && event.target.matches('div.delete')) {
             let listElement = event.target.closest('li');
             movieDB.movies = deleteArrayElement(movieDB.movies, listElement.textContent.trim()[0] - 1);
             listElement.remove();
