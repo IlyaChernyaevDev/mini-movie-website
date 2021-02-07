@@ -18,40 +18,58 @@ const addMovieForm = document.querySelector('.add');
 const movieNameInput = document.querySelector('.adding__input');
 const favoriteMovieCheckbox = document.querySelector(`input[type='checkbox']`);
 
-movieList.innerHTML = '';
-
 promoBG.style.background = `url('img/bg.jpg')`;
 genre.textContent = 'ДРАМА';
 
-movieDB.movies.sort();
-movieDB.movies.forEach((movie, index) => {
-    movieList.insertAdjacentHTML('beforeend', `<li class="promo__interactive-item">
-                                                    ${++index}. ${movie}
-                                                    <div class="delete"></div>
-                                                </li>`);
-});
+function renderMovieList() {
+    movieList.innerHTML = '';
+    movieDB.movies.sort();
+    movieDB.movies.forEach((movie, index) => {
+        movieList.innerHTML += `<li class="promo__interactive-item">
+                                    ${++index}. ${movie}
+                                    <div class="delete"></div>
+                                </li>`;
+    });
+}
 
 function removeElements([...elements]) {
     elements.forEach(element => element.remove());
 }
+
 addMovieForm.addEventListener('submit', (e) => {
     e.preventDefault();
     isFavoriteMovie(favoriteMovieCheckbox);
     movieDB.movies.push(checkLength(movieNameInput.value));
-    movieNameInput.value = '';
-    favoriteMovieCheckbox.checked = false;
+    resetForm();
+    renderMovieList();
 });
-removeElements(banners);
 
 function checkLength(str) {
     return str.length > 21 ? `${str.slice(0, 21)}...` : str;
 }
 
 movieList.addEventListener('click', e => {
-    e.target.closest('li').remove();
+    let listElement = e.target.closest('li');
+    console.log(listElement.textContent.trim()[0]);
+    movieDB.movies = deleteArrayElement(movieDB.movies, listElement.textContent.trim()[0] - 1);
+    listElement.remove();
+    renderMovieList();
 });
 
+function resetForm() {
+    movieNameInput.value = '';
+    favoriteMovieCheckbox.checked = false;
+}
 
 function isFavoriteMovie(checkbox) {
-    checkbox.checked === true ? console.log('Сделать любимым') : '' ;
+    if(checkbox.checked) console.log('Сделать любимым');
 }
+
+function deleteArrayElement(array, elementIndex) {
+    return array.filter((item, index) => {
+        if(index != elementIndex) return item;
+    });
+}
+
+removeElements(banners);
+renderMovieList();
