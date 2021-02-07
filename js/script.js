@@ -15,8 +15,8 @@ const banners = document.querySelectorAll('.promo__adv img');
 const genre = promoBG.querySelector('.promo__genre');
 const movieList = document.querySelector('.promo__interactive-list');
 const addMovieForm = document.querySelector('.add');
-const movieNameInput = document.querySelector('.adding__input');
-const favoriteMovieCheckbox = document.querySelector(`input[type='checkbox']`);
+const movieNameInput = addMovieForm.querySelector('.adding__input');
+const favoriteMovieCheckbox = addMovieForm.querySelector(`input[type='checkbox']`);
 
 promoBG.style.background = `url('img/bg.jpg')`;
 genre.textContent = 'ДРАМА';
@@ -36,25 +36,25 @@ function removeElements([...elements]) {
     elements.forEach(element => element.remove());
 }
 
-addMovieForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+function addNewMovie(event) {
+    event.preventDefault();
+    if(movieNameInput.value === '') return false;
     isFavoriteMovie(favoriteMovieCheckbox);
     movieDB.movies.push(checkLength(movieNameInput.value));
     resetForm();
     renderMovieList();
-});
+}
 
 function checkLength(str) {
     return str.length > 21 ? `${str.slice(0, 21)}...` : str;
 }
 
-movieList.addEventListener('click', e => {
-    let listElement = e.target.closest('li');
-    console.log(listElement.textContent.trim()[0]);
+function deleteMovieFromList(event) {
+    let listElement = event.target.closest('li');
     movieDB.movies = deleteArrayElement(movieDB.movies, listElement.textContent.trim()[0] - 1);
     listElement.remove();
     renderMovieList();
-});
+}
 
 function resetForm() {
     movieNameInput.value = '';
@@ -70,6 +70,9 @@ function deleteArrayElement(array, elementIndex) {
         if(index != elementIndex) return item;
     });
 }
+
+addMovieForm.addEventListener('submit', addNewMovie);
+movieList.addEventListener('click', deleteMovieFromList);
 
 removeElements(banners);
 renderMovieList();
